@@ -8,9 +8,9 @@ parameters:
       - dev
       - prod
 variables: 
-  - $ {{ if eq(parameters.Environment, 'dev') }}:
+  - ${{ if eq(parameters.Environment, 'dev') }}:
     - group: Terraform-dev
-  - $ {{ if eq(parameters.Environment, 'prod') }}:
+  - ${{ if eq(parameters.Environment, 'prod') }}:
     - group: Terraform-prod
 stages:
   - stage: TerraformFormat
