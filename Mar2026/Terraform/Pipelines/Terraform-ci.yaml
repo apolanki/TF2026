@@ -46,7 +46,7 @@ stages:
               provider: 'azurerm'
               command: 'init'
               workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
-              backendServiceArm: ${{ variables.azureServiceConnection }}
+              #backendServiceArm: ${{ variables.azureServiceConnection }}
               backendAzureRmResourceGroupName: ${{ variables.backendResourceGroup }}
               backendAzureRmStorageAccountName: ${{ variables.backendStorageAccount }}
               backendAzureRmContainerName: ${{ variables.backendContainer }}
@@ -78,7 +78,7 @@ stages:
               provider: 'azurerm'
               command: 'init'
               workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
-              backendServiceArm: $(azureServiceConnection)
+              #backendServiceArm: $(azureServiceConnection)
               backendAzureRmResourceGroupName: $(backendResourceGroup)
               backendAzureRmStorageAccountName: $(backendStorageAccount)
               backendAzureRmContainerName: $(backendContainer)
@@ -90,7 +90,7 @@ stages:
               provider: 'azurerm'
               command: 'plan'
               workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
-              backendServiceArm: $(azureServiceConnection)
+              #backendServiceArm: $(azureServiceConnection)
               backendAzureRmResourceGroupName: $(backendResourceGroup)
               backendAzureRmStorageAccountName: $(backendStorageAccount)
               backendAzureRmContainerName: $(backendContainer)
