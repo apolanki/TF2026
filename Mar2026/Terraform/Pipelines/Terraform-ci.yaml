@@ -7,7 +7,7 @@ parameters:
     values:
       - dev
       - prod
-variable: 
+variables: 
   - $ {{ if eq(parameters.Environment, 'dev') }}:
     - group: 'Terraform-dev'
   - $ {{ if eq(parameters.Environment, 'prod') }}:
