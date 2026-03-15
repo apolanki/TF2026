@@ -12,12 +12,14 @@ variables:
     - group: Terraform-dev
   - ${{ if eq(parameters.Environment, 'prod') }}:
     - group: Terraform-prod
+
+# ----- STAGE 1: Terraform Installer -----
 stages:
-  - stage: TerraformFormat
-    displayName: 'Terraform Format'
+  - stage: TerraformInstaller
+    displayName: 'Terraform Installer'
     jobs:
-      - job: TerraformFormat
-        displayName: 'Terraform Format'
+      - job: TerraformInstaller
+        displayName: 'Terraform Installer'
         steps:
           - task: TerraformInstaller@0
             displayName: 'Install Terraform'
@@ -27,13 +29,15 @@ stages:
               terraform fmt -check -recursive
               workingDirectory:$(System.DefaultWorkingDirectory)/Terraform
             displayName: 'Check Terraform Format'
-  # ----- STAGE 2: Terraform Validate -----          
-  - stage: TerraformValidate
-    displayName: 'Terraform Validate'
+
+  # ----- STAGE 2: Terraform Init and Validate -----    
+
+  - stage: TerraformInitValidate
+    displayName: 'Terraform Init and Validate'
     dependsOn: TerraformFormat
     jobs:
-      - job: TerraformValidate
-        displayName: 'Terraform Validate'
+      - job: TerraformInitValidate
+        displayName: 'Terraform Init and Validate'
         steps:
           - task: TerraformTaskV4@0
             displayName: 'Terraform Init'
@@ -58,22 +62,22 @@ stages:
 
   - stage: TerraformPlan
     displayName: 'Terraform Plan1'
-    dependsOn: TerraformValidate
+    dependsOn: TerraformInitValidate
     jobs:
       - job: TerraformPlan
-        displayName: 'Terraform Plan2'
+        displayName: 'Terraform Plan'
         steps:
-          - task: TerraformTaskV4@0
-            displayName: 'Terraform Init'
-            inputs:
-              provider: 'azurerm'
-              command: 'init'
-              workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
-              #backendServiceArm: $(azureServiceConnection)
-              backendAzureRmResourceGroupName: $(backendResourceGroup)
-              backendAzureRmStorageAccountName: $(backendStorageAccount)
-              backendAzureRmContainerName: $(backendContainer)
-              backendAzureRmKey: $(backendKey)
+          # - task: TerraformTaskV4@0
+          #   displayName: 'Terraform Init'
+          #   inputs:
+          #     provider: 'azurerm'
+          #     command: 'init'
+          #     workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
+          #     #backendServiceArm: $(azureServiceConnection)
+          #     backendAzureRmResourceGroupName: $(backendResourceGroup)
+          #     backendAzureRmStorageAccountName: $(backendStorageAccount)
+          #     backendAzureRmContainerName: $(backendContainer)
+          #     backendAzureRmKey: $(backendKey)
 
           - task: TerraformTaskV4@0
             displayName: 'Terraform Plan3'
