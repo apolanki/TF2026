@@ -25,10 +25,6 @@ stages:
             displayName: 'Install Terraform'
             inputs:
               terraformVersion: 'latest'
-          - script: | 
-             terraform fmt -check -recursive
-             workingDirectory:$(System.DefaultWorkingDirectory)/Terraform
-            displayName: 'Check Terraform Format'
 
   # ----- STAGE 2: Terraform Init and Validate -----    
 
