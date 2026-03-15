@@ -35,11 +35,6 @@ stages:
       - job: TerraformValidate
         displayName: 'Terraform Validate'
         steps:
-          - task: TerraformInstaller@0
-            displayName: 'Install Terraform'
-            inputs:
-              terraformVersion: 'latest'
-
           - task: TerraformTaskV4@0
             displayName: 'Terraform Init'
             inputs:
@@ -68,10 +63,6 @@ stages:
       - job: TerraformPlan
         displayName: 'Terraform Plan2'
         steps:
-          - task: TerraformInstaller@0
-            displayName: 'Install Terraform'
-            inputs:
-              terraformVersion: 'latest'
           - task: TerraformTaskV4@0
             displayName: 'Terraform Init'
             inputs:
