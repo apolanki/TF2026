@@ -1,6 +1,6 @@
 locals {
-  
-    common_tags = {
+
+  common_tags = {
     ApplicationName            = "tfdemo"
     DepartmentCode             = "dtd"
     BillingOwnerEmail          = "polankiaz501@outlook.com"

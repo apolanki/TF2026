@@ -1,21 +1,21 @@
 variable "varlocation" {
   description = "The location to deploy resources"
   type        = list(string)
-  default = ["centralus", "ukwest"]
+  default     = ["centralus", "ukwest"]
 }
 variable "varvnet" {
-  type        = list(string)
+  type    = list(string)
   default = ["vnet-centralus", "vnet-ukwest"]
 }
 
 variable "varaddresspace" {
-  type        = list(string)
+  type    = list(string)
   default = ["10.51.0.0/18", "10.21.0.0/18"]
 
 }
 
 variable "varsnetaddressprefix" {
-  type        = list(string)
+  type    = list(string)
   default = ["10.51.3.0/26", "10.21.1.0/26"]
 
 }
@@ -27,14 +27,14 @@ variable "varsubnet" {
 variable "admin_username" {
   description = "The admin username for the VM"
   type        = string
-  default = "azuser1"
+  default     = "azuser1"
 }
 
 variable "admin_password" {
   description = "The admin password for the VM"
   type        = string
-  sensitive = true
-  default = "Azuser@1234"
+  sensitive   = true
+  default     = "Azuser@1234"
 }
 
 //VM Variables
@@ -42,7 +42,7 @@ variable "admin_password" {
 
 // Variables for Virtual Machine
 variable "varvmrg" {
-  type = list(string)
+  type    = list(string)
   default = ["rg-vms-centralus", "rg-vms-ukwest"]
 }
 
@@ -92,7 +92,7 @@ variable "varsubnetid" {
 }
 
 variable "vrg1" {
-    default = "rg-dev"
+  default = "rg-dev"
 }
 
 variable "varvnet1" {

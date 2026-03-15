@@ -1,8 +1,8 @@
 module "deploy_infra" {
-    source = "./Modules"
+  source = "./Modules"
 
 
-  
+
 }
 
 terraform {
@@ -11,7 +11,7 @@ terraform {
     storage_account_name = "sapolankitesttfstate"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
-    
+
   }
 }
 
