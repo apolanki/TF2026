@@ -35,12 +35,12 @@ stages:
       - job: TerraformValidate
         displayName: 'Terraform Validate'
         steps:
-          - task: TerraformInstaller@0
+          - task: TerraformInstaller@1
             displayName: 'Install Terraform'
             inputs:
               terraformVersion: 'latest'
 
-          - task: TerraformTaskV4@4
+          - task: TerraformTaskV4@2
             displayName: 'Terraform Init'
             inputs:
               provider: 'azurerm'
@@ -52,7 +52,7 @@ stages:
               backendAzureRmContainerName: ${{ variables.backendContainer }}
               backendAzureRmKey: ${{ variables.backendKey }}
           
-          - task: TerraformTaskV4@4
+          - task: TerraformTaskV4@3
             displayName: 'Terraform Validate'
             inputs:
               provider: 'azurerm'
@@ -68,7 +68,7 @@ stages:
       - job: TerraformPlan
         displayName: 'Terraform Plan'
         steps:
-          - task: TerraformInstaller@0
+          - task: TerraformInstaller@4
             displayName: 'Install Terraform'
             inputs:
               terraformVersion: 'latest'
@@ -84,7 +84,7 @@ stages:
               backendAzureRmContainerName: $(backendContainer)
               backendAzureRmKey: $(backendKey)
 
-          - task: TerraformTaskV4@4
+          - task: TerraformTaskV4@5
             displayName: 'Terraform Plan'
             inputs:
               provider: 'azurerm'
