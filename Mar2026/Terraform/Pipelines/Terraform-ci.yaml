@@ -1,0 +1,70 @@
+trigger: none
+
+parameters:
+  - name: Environment
+    type: string
+    default: 'dev'
+    values:
+      - dev
+      - prod
+variable: 
+  - $ {{ if eq(parameters.Environment, 'dev') }}:
+    - group: 'Terraform-dev'
+  - $ {{ if eq(parameters.Environment, 'prod') }}:
+    - group: 'Terraform-prod'
+stages:
+  - stage: TerraformFormat
+    displayName: 'Terraform Format'
+    jobs:
+      - job: TerraformFormat
+        displayName: 'Terraform Format'
+        steps:
+          - task: TerraformInstaller@0
+            displayName: 'Install Terraform'
+            inputs:
+              terraformVersion: 'latest'
+          - script: | 
+              terraform fmt -recursive
+            displayName: 'Check Terraform Format'
+  - stage: TerraformValidate
+    displayName: 'Terraform Validate'
+    dependsOn: TerraformFormat
+    jobs:
+      - job: TerraformValidate
+        displayName: 'Terraform Validate'
+        steps:
+          - task: TerraformInstaller@0
+            displayName: 'Install Terraform'
+            inputs:
+              terraformVersion: 'latest'
+          - script: |
+              terraform init
+              workingDirectory=$(System.DefaultWorkingDirectory)/Terraform
+              backendServiceArm=$azureServiceConnection
+              backendAzureRmResourceGroupName=$backendResourceGroup
+              backendAzureRmStorageAccountName=$backendStorageAccount
+              backendAzureRmContainerName=$backendContainer
+              backendAzureRmKey=$backendKey
+          - task: TerraformTaskV4@4
+              terraform validate
+            displayName: 'Validate Terraform Configuration'
+  - stage: TerraformPlan
+    displayName: 'Terraform Plan'
+    dependsOn: TerraformValidate
+    jobs:
+      - job: TerraformPlan
+        displayName: 'Terraform Plan'
+        steps:
+          - task: TerraformInstaller@0
+            displayName: 'Install Terraform'
+            inputs:
+              terraformVersion: 'latest'
+          - script: |
+              terraform plan
+              workingDirectory=$(System.DefaultWorkingDirectory)/Terraform
+              backendServiceArm=$azureServiceConnection
+              backendAzureRmResourceGroupName=$backendResourceGroup
+              backendAzureRmStorageAccountName=$backendStorageAccount
+              backendAzureRmContainerName=$backendContainer
+              backendAzureRmKey=$backendKey
+            displayName: 'Create Terraform Plan'
