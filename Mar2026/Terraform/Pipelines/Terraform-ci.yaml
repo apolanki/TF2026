@@ -24,8 +24,10 @@ stages:
             inputs:
               terraformVersion: 'latest'
           - script: | 
-              terraform fmt -recursive
+              terraform fmt -check -recursive
+              workingDirectory:$(System.DefaultWorkingDirectory)/Terraform
             displayName: 'Check Terraform Format'
+  # ----- STAGE 2: Terraform Validate -----          
   - stage: TerraformValidate
     displayName: 'Terraform Validate'
     dependsOn: TerraformFormat
@@ -37,17 +39,28 @@ stages:
             displayName: 'Install Terraform'
             inputs:
               terraformVersion: 'latest'
-          - script: |
-              terraform init
-              workingDirectory=$(System.DefaultWorkingDirectory)/Terraform
-              backendServiceArm=$azureServiceConnection
-              backendAzureRmResourceGroupName=$backendResourceGroup
-              backendAzureRmStorageAccountName=$backendStorageAccount
-              backendAzureRmContainerName=$backendContainer
-              backendAzureRmKey=$backendKey
+
           - task: TerraformTaskV4@4
-              terraform validate
-            displayName: 'Validate Terraform Configuration'
+            displayName: 'Terraform Init'
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
+              backendServiceArm: ${{ variables.azureServiceConnection }}
+              backendAzureRmResourceGroupName: ${{ variables.backendResourceGroup }}
+              backendAzureRmStorageAccountName: ${{ variables.backendStorageAccount }}
+              backendAzureRmContainerName: ${{ variables.backendContainer }}
+              backendAzureRmKey: ${{ variables.backendKey }}
+          
+          - task: TerraformTaskV4@4
+            displayName: 'Terraform Validate'
+            inputs:
+              provider: 'azurerm'
+              command: 'validate'
+              workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
+
+# ----- STAGE 3: Terraform Plan -----
+
   - stage: TerraformPlan
     displayName: 'Terraform Plan'
     dependsOn: TerraformValidate
@@ -59,12 +72,27 @@ stages:
             displayName: 'Install Terraform'
             inputs:
               terraformVersion: 'latest'
-          - script: |
-              terraform plan
-              workingDirectory=$(System.DefaultWorkingDirectory)/Terraform
-              backendServiceArm=$azureServiceConnection
-              backendAzureRmResourceGroupName=$backendResourceGroup
-              backendAzureRmStorageAccountName=$backendStorageAccount
-              backendAzureRmContainerName=$backendContainer
-              backendAzureRmKey=$backendKey
-            displayName: 'Create Terraform Plan'
+          - task: TerraformTaskV4@4
+            displayName: 'Terraform Init'
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
+              backendServiceArm: $(azureServiceConnection)
+              backendAzureRmResourceGroupName: $(backendResourceGroup)
+              backendAzureRmStorageAccountName: $(backendStorageAccount)
+              backendAzureRmContainerName: $(backendContainer)
+              backendAzureRmKey: $(backendKey)
+
+          - task: TerraformTaskV4@4
+            displayName: 'Terraform Plan'
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
+              backendServiceArm: $(azureServiceConnection)
+              backendAzureRmResourceGroupName: $(backendResourceGroup)
+              backendAzureRmStorageAccountName: $(backendStorageAccount)
+              backendAzureRmContainerName: $(backendContainer)
+              backendAzureRmKey: $(backendKey)
+        
