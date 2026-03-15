@@ -15,13 +15,13 @@ variables:
 
 # ----- STAGE 1: Terraform Installer -----
 stages:
-  - stage: TerraformInstaller1
+  - stage: TerraformInstaller
     displayName: 'Terraform Installer'
     jobs:
       - job: TerraformInstaller
         displayName: 'Terraform Installer'
         steps:
-          - task: TerraformInstaller0@0
+          - task: TerraformInstaller@0
             displayName: 'Install Terraform'
             inputs:
               terraformVersion: 'latest'
@@ -30,7 +30,7 @@ stages:
 
   - stage: TerraformInitValidate
     displayName: 'Terraform Init and Validate'
-    #dependsOn: TerraformFormat
+    dependsOn: TerraformInstaller
     jobs:
       - job: TerraformInitValidate
         displayName: 'Terraform Init and Validate'
@@ -58,7 +58,7 @@ stages:
 
   - stage: TerraformPlan
     displayName: 'Terraform Plan1'
-    #dependsOn: TerraformInitValidate
+    dependsOn: TerraformInitValidate
     jobs:
       - job: TerraformPlan
         displayName: 'Terraform Plan'
