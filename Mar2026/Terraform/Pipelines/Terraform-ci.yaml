@@ -18,7 +18,7 @@ stages:
   - stage: TerraformInstaller
     displayName: 'Terraform Installer'
     jobs:
-      - job: TerraformInstaller
+      - job: TerraformInstaller1
         displayName: 'Terraform Installer'
         steps:
           - task: TerraformInstaller@0
@@ -34,7 +34,7 @@ stages:
 
   - stage: TerraformInitValidate
     displayName: 'Terraform Init and Validate'
-    dependsOn: TerraformFormat
+    #dependsOn: TerraformFormat
     jobs:
       - job: TerraformInitValidate
         displayName: 'Terraform Init and Validate'
@@ -62,7 +62,7 @@ stages:
 
   - stage: TerraformPlan
     displayName: 'Terraform Plan1'
-    dependsOn: TerraformInitValidate
+    #dependsOn: TerraformInitValidate
     jobs:
       - job: TerraformPlan
         displayName: 'Terraform Plan'
