@@ -15,10 +15,10 @@ variables:
 
 # ----- STAGE 1: Terraform Installer -----
 stages:
-  - stage: TerraformInstaller
+  - stage: TerraformInstaller1
     displayName: 'Terraform Installer'
     jobs:
-      - job: TerraformInstaller1
+      - job: TerraformInstaller
         displayName: 'Terraform Installer'
         steps:
           - task: TerraformInstaller@0
