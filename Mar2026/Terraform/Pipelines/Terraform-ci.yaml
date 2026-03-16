@@ -22,13 +22,15 @@ jobs:
   steps:
   - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
     displayName: Install Terraform latest
+    inputs:
+      command: 'latest'
   - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
     displayName: 'Terraform: Init'
     inputs:
-      terraformVersion: 'latest'
+      command: 'init'
 
       workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
-      #backendServiceArm: ${{ variables.azureServiceConnection }}
+      backendServiceArm: $(azureServiceConnection)
       backendAzureRmResourceGroupName: $(backendResourceGroup)
       backendAzureRmStorageAccountName: $(backendStorageAccount)
       backendAzureRmContainerName: $(backendContainer)
@@ -44,7 +46,7 @@ jobs:
       provider: azurerm
       command: validate
       workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
-      #backendServiceArm: ${{ variables.azureServiceConnection }}
+      backendServiceArm: $(azureServiceConnection)
       backendAzureRmResourceGroupName: $(backendResourceGroup)
       backendAzureRmStorageAccountName: $(backendStorageAccount)
       backendAzureRmContainerName: $(backendContainer)
@@ -56,7 +58,7 @@ jobs:
       provider: azurerm
       command: plan
       workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
-      #backendServiceArm: ${{ variables.azureServiceConnection }}
+      backendServiceArm: $(azureServiceConnection)
       backendAzureRmResourceGroupName: $(backendResourceGroup)
       backendAzureRmStorageAccountName: $(backendStorageAccount)
       backendAzureRmContainerName: $(backendContainer)
