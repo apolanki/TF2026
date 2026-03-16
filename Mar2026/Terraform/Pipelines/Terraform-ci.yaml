@@ -22,8 +22,11 @@ jobs:
   steps:
   - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
     displayName: Install Terraform latest
+  - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+    displayName: 'Terraform: Init'
     inputs:
       terraformVersion: 'latest'
+
       workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
       #backendServiceArm: ${{ variables.azureServiceConnection }}
       backendAzureRmResourceGroupName: $(backendResourceGroup)
