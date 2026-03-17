@@ -8,6 +8,18 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+parameters:
+  - name: Environment
+    type: string
+    default: 'dev'
+    values:
+      - dev
+      - prod
+variables: 
+  - ${{ if eq(parameters.Environment, 'dev') }}:
+    - group: Terraform-dev
+  - ${{ if eq(parameters.Environment, 'prod') }}:
+    - group: Terraform-prod
 
 steps:
 - task: TerraformInstaller@2
