@@ -22,7 +22,7 @@ variables:
     - group: Terraform-prod
 
 steps:
-- task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@4
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstallerV4@4
   displayName: 'Terraform Install'
   inputs:
     terraformVersion: '1.5.7'
