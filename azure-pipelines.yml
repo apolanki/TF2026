@@ -30,7 +30,7 @@ steps:
   inputs:
     terraformVersion: 1.5.7
 
-- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+- task: TerraformTaskV4@4
   displayName: 'Terraform Init'
   inputs:
     provider: 'azurerm'
