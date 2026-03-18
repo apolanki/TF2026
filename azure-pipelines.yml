@@ -61,6 +61,7 @@ steps:
     command: 'plan'
     workingDirectory: $(System.DefaultWorkingDirectory)
     backendServiceArm: $(azureServiceConnection)
+    environmentServiceName: $(azureServiceConnection)
     backendAzureRmResourceGroupName: $(backendResourceGroup)
     backendAzureRmStorageAccountName: $(backendStorageAccount)
     backendAzureRmContainerName: $(backendContainer)
