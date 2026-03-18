@@ -59,7 +59,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: $(System.DefaultWorkingDirectory)
+    workingDirectory: $(workingdirectory)
     backendServiceArm: $(azureServiceConnection)
     environmentServiceName: '61ff3051-e17a-46fe-85f8-c9f5a406b25e'
     environmentServiceNameAzureRM: '61ff3051-e17a-46fe-85f8-c9f5a406b25e'
