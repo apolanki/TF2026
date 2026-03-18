@@ -14,6 +14,9 @@ variables:
     - group: Terraform-prod
 
 # ----- STAGE 1: Terraform Installer -----
+stages:
+- stage: TerraformInstaller 
+  displayName: 'Terraform Installer'
 jobs:
 - job: TFInstaller_job1
   displayName: 'Terraform Installer'
@@ -38,8 +41,11 @@ jobs:
 
 
 
-  # ----- STAGE 2: Terraform Validate -----    
-
+  # ----- STAGE 2: Terraform Validate -----
+  - stage: TerraformValidate
+    displayName: 'Terraform Validate'
+  jobs:
+  - job: TFValidate_job1    
   - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
     displayName: 'Terraform: Validate'
     inputs:
@@ -51,7 +57,10 @@ jobs:
       backendAzureRmStorageAccountName: $(backendStorageAccount)
       backendAzureRmContainerName: $(backendContainer)
       backendAzureRmKey: $(backendKey)
-
+  
+  - stage: TerraformPlan
+    displayName: 'Terraform Plan'
+  - job: TFPlan_job1
   - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
     displayName: 'Terraform: Plan'
     inputs:
