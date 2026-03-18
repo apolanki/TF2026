@@ -29,7 +29,7 @@ jobs:
     inputs:
       provider: azurerm
       command: init
-      workingDirectory: $(System.DefaultWorkingDirectory)
+      workingDirectory: $(workingdirectory)
       backendServiceArm: $(azureServiceConnection)
       backendAzureRmResourceGroupName: $(backendResourceGroup)
       backendAzureRmStorageAccountName: $(backendStorageAccount)
