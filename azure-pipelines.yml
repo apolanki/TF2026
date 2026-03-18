@@ -35,7 +35,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
+    workingDirectory: $(System.DefaultWorkingDirectory)
     backendServiceArm: $(azureServiceConnection)
     backendAzureRmResourceGroupName: $(backendResourceGroup)
     backendAzureRmStorageAccountName: $(backendStorageAccount)
@@ -47,7 +47,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'validate'
-    workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
+    workingDirectory: $(System.DefaultWorkingDirectory)
     backendServiceArm: $(azureServiceConnection)
     backendAzureRmResourceGroupName: $(backendResourceGroup)
     backendAzureRmStorageAccountName: $(backendStorageAccount)
@@ -59,7 +59,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
+    workingDirectory: $(System.DefaultWorkingDirectory)
     backendServiceArm: $(azureServiceConnection)
     backendAzureRmResourceGroupName: $(backendResourceGroup)
     backendAzureRmStorageAccountName: $(backendStorageAccount)
