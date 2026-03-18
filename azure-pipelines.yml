@@ -1,0 +1,67 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+parameters:
+  - name: Environment
+    type: string
+    default: 'dev'
+    values:
+      - dev
+      - prod
+variables: 
+  - ${{ if eq(parameters.Environment, 'dev') }}:
+    - group: Terraform-dev
+  - ${{ if eq(parameters.Environment, 'prod') }}:
+    - group: Terraform-prod
+
+steps:
+# - task: TerraformInstaller@2
+#   inputs:
+#     terraformVersion: '1.5.7'
+- task: TerraformInstaller@0
+  displayName: 'Terraform Install'
+  inputs:
+    terraformVersion: 1.5.7
+
+- task: TerraformTaskV4@4
+  displayName: 'Terraform Init'
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
+    backendServiceArm: $(azureServiceConnection)
+    backendAzureRmResourceGroupName: $(backendResourceGroup)
+    backendAzureRmStorageAccountName: $(backendStorageAccount)
+    backendAzureRmContainerName: $(backendContainer)
+    backendAzureRmKey: $(backendKey)
+
+- task: TerraformTaskV4@4
+  displayName: 'Terraform validate'
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
+    workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
+    backendServiceArm: $(azureServiceConnection)
+    backendAzureRmResourceGroupName: $(backendResourceGroup)
+    backendAzureRmStorageAccountName: $(backendStorageAccount)
+    backendAzureRmContainerName: $(backendContainer)
+    backendAzureRmKey: $(backendKey)
+
+- task: TerraformTaskV4@4
+  displayName: 'Terraform plan'
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: $(System.DefaultWorkingDirectory)/Terraform
+    backendServiceArm: $(azureServiceConnection)
+    backendAzureRmResourceGroupName: $(backendResourceGroup)
+    backendAzureRmStorageAccountName: $(backendStorageAccount)
+    backendAzureRmContainerName: $(backendContainer)
+    backendAzureRmKey: $(backendKey)
