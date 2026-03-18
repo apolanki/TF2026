@@ -25,7 +25,7 @@ steps:
 # - task: TerraformInstaller@2
 #   inputs:
 #     terraformVersion: '1.5.7'
-- task: TerraformInstaller@0
+- task: TerraformInstaller@2
   displayName: 'Terraform Install'
   inputs:
     terraformVersion: 1.5.7
