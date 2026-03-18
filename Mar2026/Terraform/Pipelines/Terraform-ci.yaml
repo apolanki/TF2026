@@ -45,7 +45,7 @@ jobs:
     inputs:
       provider: azurerm
       command: validate
-      workingDirectory: $(System.DefaultWorkingDirectory)
+      workingDirectory: $(workingdirectory)
       backendServiceArm: $(azureServiceConnection)
       backendAzureRmResourceGroupName: $(backendResourceGroup)
       backendAzureRmStorageAccountName: $(backendStorageAccount)
@@ -57,7 +57,7 @@ jobs:
     inputs:
       provider: azurerm
       command: plan
-      workingDirectory: $(System.DefaultWorkingDirectory)
+      workingDirectory: $(workingdirectory)
       backendServiceArm: $(azureServiceConnection)
       backendAzureRmResourceGroupName: $(backendResourceGroup)
       backendAzureRmStorageAccountName: $(backendStorageAccount)
