@@ -59,6 +59,7 @@ jobs:
       command: plan
       workingDirectory: $(workingdirectory)
       backendServiceArm: $(azureServiceConnection)
+      environmentServiceNameAzureRM: $(envservicenameazurerm)
       backendAzureRmResourceGroupName: $(backendResourceGroup)
       backendAzureRmStorageAccountName: $(backendStorageAccount)
       backendAzureRmContainerName: $(backendContainer)
