@@ -58,7 +58,7 @@ jobs:
       provider: azurerm
       command: plan
       workingDirectory: $(workingdirectory)
-      backendServiceArm: $(azureServiceConnection)
+      #backendServiceArm: $(azureServiceConnection)
       environmentServiceNameAzureRM: $(envservicenameazurerm)
       backendAzureRmResourceGroupName: $(backendResourceGroup)
       backendAzureRmStorageAccountName: $(backendStorageAccount)
