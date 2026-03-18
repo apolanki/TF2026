@@ -17,7 +17,7 @@ variables:
 stages:
 - stage: TerraformInstaller 
   displayName: 'Terraform Installer'
-jobs:
+#jobs:
 - job: TFInstaller_job1
   displayName: 'Terraform Installer'
   pool:
