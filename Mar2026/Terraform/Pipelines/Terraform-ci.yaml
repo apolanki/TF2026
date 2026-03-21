@@ -102,9 +102,9 @@ stages:
               provider: azurerm
               command: plan
               workingDirectory: $(workingDirectory)
-              backendServiceArm: $(azureServiceConnection)
+              # backendServiceArm: $(azureServiceConnection)
               environmentServiceNameAzureRM: $(azureServiceConnection)  # ← added missing input
-              backendAzureRmResourceGroupName: $(backendResourceGroup)
-              backendAzureRmStorageAccountName: $(backendStorageAccount)
-              backendAzureRmContainerName: $(backendContainer)
-              backendAzureRmKey: $(backendKey)
+              # backendAzureRmResourceGroupName: $(backendResourceGroup)
+              # backendAzureRmStorageAccountName: $(backendStorageAccount)
+              # backendAzureRmContainerName: $(backendContainer)
+              # backendAzureRmKey: $(backendKey)
