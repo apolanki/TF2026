@@ -106,6 +106,7 @@ stages:
               command: plan
               workingDirectory: $(workingDirectory)
               backendServiceArm: $(azureServiceConnection)
+              environmentServiceNameAzureRM: $(azureServiceConnection)  # ← added missing input
               backendAzureRmResourceGroupName: $(backendResourceGroup)
               backendAzureRmStorageAccountName: $(backendStorageAccount)
               backendAzureRmContainerName: $(backendContainer)
