@@ -1,0 +1,62 @@
+trigger: none
+
+parameters:
+  - name: Environment
+    type: string
+    default: 'dev'
+    values:
+      - dev
+      - prod
+pool:
+  vmImage: 'ubuntu-latest'
+variables:
+  - ${{ if eq(parameters.Environment, 'dev') }}:
+    - group: Terraform-dev
+  - ${{ if eq(parameters.Environment, 'prod') }}:
+    - group: Terraform-prod
+
+# ----- STAGE 1: Terraform Initialiser -----
+stages:
+  
+  - stage: TerraformPlan
+    displayName: 'Terraform Plan'
+    dependsOn: TerraformInstaller                         # ← added to enforce ordering
+    jobs:
+      - job: TFPlan_job1                                  # ← job block was missing
+        displayName: 'Terraform Plan'
+        steps:
+          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
+            displayName: 'Install Terraform latest'
+                                                         
+          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+            displayName: 'Terraform: Plan'               # ← moved inside steps
+            inputs:                                       # ← was missing entirely
+              provider: azurerm
+              command: plan
+              workingDirectory: $(workingDirectory)
+              backendServiceArm: $(azureServiceConnection)
+              backendAzureRmResourceGroupName: $(backendResourceGroup)
+              backendAzureRmStorageAccountName: $(backendStorageAccount)
+              backendAzureRmContainerName: $(backendContainer)
+              backendAzureRmKey: $(backendKey)
+  - stage: TerraformApply
+    displayName: 'Terraform Apply'
+    dependsOn: TerraformPlan                         # ← added to enforce ordering
+    jobs:
+      - job: TFApply_job1                                  # ← job block was missing
+        displayName: 'Terraform Apply'
+        steps:
+          # - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
+          #   displayName: 'Install Terraform latest'
+                                                         
+          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+            displayName: 'Terraform: Apply'               # ← moved inside steps
+            inputs:                                       # ← was missing entirely
+              provider: azurerm
+              command: apply
+              workingDirectory: $(workingDirectory)
+              backendServiceArm: $(azureServiceConnection)
+              backendAzureRmResourceGroupName: $(backendResourceGroup)
+              backendAzureRmStorageAccountName: $(backendStorageAccount)
+              backendAzureRmContainerName: $(backendContainer)
+              backendAzureRmKey: $(backendKey)

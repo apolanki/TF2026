@@ -28,13 +28,13 @@ stages:
           - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
             displayName: 'Install Terraform latest'
           
-          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
-            displayName: 'Terraform: fmt'
-            inputs:
-              provider: azurerm
-              command: fmt
-              commandOptions: '--check --recursive'
-              workingDirectory: $(workingDirectory)
+          # - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+          #   displayName: 'Terraform: fmt'
+          #   inputs:
+          #     provider: azurerm
+          #     command: fmt
+          #     commandOptions: '--check --recursive'
+          #     workingDirectory: $(workingDirectory)
 
   - stage: TerraformInit
     displayName: 'Terraform Init'
