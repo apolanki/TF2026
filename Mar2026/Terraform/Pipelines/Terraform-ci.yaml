@@ -58,7 +58,7 @@ stages:
   # ----- STAGE 2: Terraform Validate -----
   - stage: TerraformValidate
     displayName: 'Terraform Validate'
-    dependsOn: TerraformInstaller                         # ← added to enforce ordering
+    dependsOn: TerraformInit                         # ← added to enforce ordering
     jobs:
       - job: TFValidate_job1                              # ← job block was missing
         displayName: 'Terraform Validate'
@@ -75,7 +75,7 @@ stages:
   # ----- STAGE 3: Terraform Plan -----
   - stage: TerraformPlan
     displayName: 'Terraform Plan - ${{ parameters.Environment }}'
-    dependsOn: TerraformValidate                      # ← added to enforce ordering
+    dependsOn: TerraformInit                      # ← added to enforce ordering
     variables:
       - ${{ if eq(parameters.Environment, 'dev') }}:
         - group: Terraform-dev
