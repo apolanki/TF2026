@@ -7,6 +7,9 @@ parameters:
     values:
       - dev
       - prod
+pool:
+  vmImage: 'ubuntu-latest'
+
 variables: 
   - ${{ if eq(parameters.Environment, 'dev') }}:
     - group: Terraform-dev
@@ -17,12 +20,7 @@ variables:
 stages:
   - stage: TerraformInstaller 
     displayName: 'Terraform Installer'
-# #jobs:
-# - job: TFInstaller_job1
-#   displayName: 'Terraform Installer'
-  pool:
-    vmImage: ubuntu-latest
-  steps:
+steps:
   - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
     displayName: Install Terraform latest
     #terraformVersion: 'latest'
