@@ -108,3 +108,11 @@ stages:
               # backendAzureRmStorageAccountName: $(backendStorageAccount)
               # backendAzureRmContainerName: $(backendContainer)
               # backendAzureRmKey: $(backendKey)
+
+          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+            displayName: 'Terraform: Apply'
+            inputs:
+              provider: azurerm
+              command: apply
+              workingDirectory: $(workingDirectory)
+              environmentServiceNameAzureRM: $(azureServiceConnection)  # ← added missing input
