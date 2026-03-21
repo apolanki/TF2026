@@ -20,14 +20,20 @@ variables:
 # ----- STAGE 1: Terraform Installer -----
 stages:
   - stage: TerraformInstaller
-    displayName: 'Terraform Installer & Init'
+    displayName: 'Terraform Installer'
     jobs:
       - job: TFInstaller_job1
-        displayName: 'Terraform Installer & Init'
+        displayName: 'Terraform Installer'
         steps:                                             # ← steps: was missing
           - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
             displayName: 'Install Terraform latest'
-
+  - stage: TerraformInit
+    displayName: 'Terraform Init'
+    dependsOn: TerraformInstaller                         # ← added to enforce ordering
+    jobs:
+      - job: TFInit_job1                                  # ← job block was missing
+        displayName: 'Terraform Init'
+        steps:                                             # ← steps: was missing
           - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
             displayName: 'Terraform: Init'               # ← moved inside steps
             inputs:                                       # ← was missing entirely
@@ -67,7 +73,7 @@ stages:
   # ----- STAGE 3: Terraform Plan -----
   - stage: TerraformPlan
     displayName: 'Terraform Plan - ${{ parameters.Environment }}'
-    dependsOn: TerraformTaskv4@4                         # ← added to enforce ordering
+    dependsOn: TerraformInit                        # ← added to enforce ordering
     variables:
       - ${{ if eq(parameters.Environment, 'dev') }}:
         - group: Terraform-dev
