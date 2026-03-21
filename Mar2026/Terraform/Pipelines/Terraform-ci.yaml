@@ -32,7 +32,8 @@ stages:
             displayName: 'Terraform: fmt'
             inputs:
               provider: azurerm
-              command: fmt --check --recursive
+              command: fmt
+              commandOptions: '--check --recursive'
               workingDirectory: $(workingDirectory)
 
   - stage: TerraformInit
