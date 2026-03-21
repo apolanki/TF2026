@@ -67,7 +67,7 @@ stages:
   # ----- STAGE 3: Terraform Plan -----
   - stage: TerraformPlan
     displayName: 'Terraform Plan - ${{ parameters.Environment }}'
-    dependsOn: TerraformInstaller                         # ← added to enforce ordering
+    dependsOn: TerraformTaskv4@4                         # ← added to enforce ordering
     variables:
       - ${{ if eq(parameters.Environment, 'dev') }}:
         - group: Terraform-dev
