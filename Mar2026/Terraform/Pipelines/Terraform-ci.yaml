@@ -15,8 +15,8 @@ variables:
 
 # ----- STAGE 1: Terraform Installer -----
 stages:
-- stage: TerraformInstaller 
-  displayName: 'Terraform Installer'
+  - stage: TerraformInstaller 
+    displayName: 'Terraform Installer'
 # #jobs:
 # - job: TFInstaller_job1
 #   displayName: 'Terraform Installer'
@@ -59,18 +59,24 @@ stages:
       backendAzureRmKey: $(backendKey)
   
   - stage: TerraformPlan
-    displayName: 'Terraform Plan'
-  # - job: TFPlan_job1
-  - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
-    displayName: 'Terraform: Plan'
-    inputs:
-      provider: azurerm
-      command: plan
-      workingDirectory: $(workingdirectory)
-      #backendServiceArm: $(azureServiceConnection)
-      environmentServiceNameAzureRM: $(envservicenameazurerm)
-      backendAzureRmResourceGroupName: $(backendResourceGroup)
-      backendAzureRmStorageAccountName: $(backendStorageAccount)
-      backendAzureRmContainerName: $(backendContainer)
-      backendAzureRmKey: $(backendKey)
- 
+    variables:
+      - ${{ if eq(parameters.Environment, 'dev') }}:
+        - group: Terraform-dev
+      - ${{ if eq(parameters.Environment, 'prod') }}:
+        - group: Terraform-prod
+    displayName: 'Terraform Plan ${{ parameters.Environment }}'
+
+    jobs:
+      - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+        displayName: 'Terraform: Plan'
+        parameters:
+          provider: azurerm
+          command: plan
+          workingDirectory: $(workingdirectory)
+          #backendServiceArm: $(azureServiceConnection)
+          environmentServiceNameAzureRM: $(envservicenameazurerm)
+          backendAzureRmResourceGroupName: $(backendResourceGroup)
+          backendAzureRmStorageAccountName: $(backendStorageAccount)
+          backendAzureRmContainerName: $(backendContainer)
+          backendAzureRmKey: $(backendKey)
+    
