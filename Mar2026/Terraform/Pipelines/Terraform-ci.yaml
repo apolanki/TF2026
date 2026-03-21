@@ -47,9 +47,9 @@ stages:
               backendAzureRmStorageAccountName: $(backendStorageAccount)
               backendAzureRmContainerName: $(backendContainer)
               backendAzureRmKey: $(backendKey)
-      - job: TFValidate_job1                              # ← job block was missing
-        displayName: 'Terraform Validate'
-        steps:
+      # - job: TFValidate_job1                              # ← job block was missing
+      #   displayName: 'Terraform Validate'
+      #   steps:
           - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
             displayName: 'Terraform: Validate'
             inputs:
