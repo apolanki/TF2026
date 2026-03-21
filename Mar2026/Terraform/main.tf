@@ -1,8 +1,5 @@
 module "deploy_infra" {
-  source = "././Modules"
-
-
-
+  source = "./Modules"
 }
 
 terraform {
