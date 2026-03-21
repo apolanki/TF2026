@@ -89,6 +89,8 @@ stages:
           - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
             displayName: 'Install Terraform latest'                                            # ← steps block was missing
           - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+            displayName: 'Terraform: Init'               # ← moved inside steps
+          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
             displayName: 'Terraform: Plan'
             inputs:                                       # ← was incorrectly "parameters:"
               provider: azurerm
