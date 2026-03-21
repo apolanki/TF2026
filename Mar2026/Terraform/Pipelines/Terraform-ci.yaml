@@ -20,13 +20,13 @@ variables:
 stages:
   - stage: TerraformInstaller 
     #displayName: 'Terraform Installer'
-jobs:
-  - job: TFInstaller_job1
-    displayName: 'Terraform Installer'
-    steps:
-      - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
-        displayName: Install Terraform latest
-        #terraformVersion: 'latest'
+    jobs:
+      - job: TFInstaller_job1
+        displayName: 'Terraform Installer'
+        steps:
+          - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
+            displayName: Install Terraform latest
+            #terraformVersion: 'latest'
 
       - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
         displayName: 'Terraform: Init'
