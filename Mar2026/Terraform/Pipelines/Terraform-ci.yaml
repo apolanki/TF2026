@@ -19,42 +19,44 @@ variables:
 # ----- STAGE 1: Terraform Installer -----
 stages:
   - stage: TerraformInstaller 
+    #displayName: 'Terraform Installer'
+jobs:
+  - job: TFInstaller_job1
     displayName: 'Terraform Installer'
-steps:
-  - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
-    displayName: Install Terraform latest
-    #terraformVersion: 'latest'
+    steps:
+      - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
+        displayName: Install Terraform latest
+        #terraformVersion: 'latest'
 
-  - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
-    displayName: 'Terraform: Init'
-    inputs:
-      provider: azurerm
-      command: init
-      workingDirectory: $(workingdirectory)
-      backendServiceArm: $(azureServiceConnection)
-      backendAzureRmResourceGroupName: $(backendResourceGroup)
-      backendAzureRmStorageAccountName: $(backendStorageAccount)
-      backendAzureRmContainerName: $(backendContainer)
-      backendAzureRmKey: $(backendKey)
+      - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+        displayName: 'Terraform: Init'
+        inputs:
+          provider: azurerm
+          command: init
+          workingDirectory: $(workingdirectory)
+          backendServiceArm: $(azureServiceConnection)
+          backendAzureRmResourceGroupName: $(backendResourceGroup)
+          backendAzureRmStorageAccountName: $(backendStorageAccount)
+          backendAzureRmContainerName: $(backendContainer)
+          backendAzureRmKey: $(backendKey)
 
 
 
   # ----- STAGE 2: Terraform Validate -----
   - stage: TerraformValidate
     displayName: 'Terraform Validate'
-  # jobs:
-  # - job: TFValidate_job1    
-  - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
-    displayName: 'Terraform: Validate'
-    inputs:
-      provider: azurerm
-      command: validate
-      workingDirectory: $(workingdirectory)
-      backendServiceArm: $(azureServiceConnection)
-      backendAzureRmResourceGroupName: $(backendResourceGroup)
-      backendAzureRmStorageAccountName: $(backendStorageAccount)
-      backendAzureRmContainerName: $(backendContainer)
-      backendAzureRmKey: $(backendKey)
+    jobs:
+      - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+        displayName: 'Terraform: Validate'
+        inputs:
+          provider: azurerm
+          command: validate
+          workingDirectory: $(workingdirectory)
+          backendServiceArm: $(azureServiceConnection)
+          backendAzureRmResourceGroupName: $(backendResourceGroup)
+          backendAzureRmStorageAccountName: $(backendStorageAccount)
+          backendAzureRmContainerName: $(backendContainer)
+          backendAzureRmKey: $(backendKey)
   
   - stage: TerraformPlan
     variables:
