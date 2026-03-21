@@ -75,7 +75,7 @@ stages:
   # ----- STAGE 3: Terraform Plan -----
   - stage: TerraformPlan
     displayName: 'Terraform Plan - ${{ parameters.Environment }}'
-    #dependsOn: TerraformInit                      # ← added to enforce ordering
+    dependsOn: TerraformValidate                      # ← added to enforce ordering
     variables:
       - ${{ if eq(parameters.Environment, 'dev') }}:
         - group: Terraform-dev
@@ -84,7 +84,7 @@ stages:
     jobs:
       - job: TFPlan_job1                                  # ← job block was missing
         displayName: 'Terraform Plan'
-        dependsOn: TerraformInit                         # ← added to enforce ordering
+        #dependsOn: TerraformInit                         # ← added to enforce ordering
         steps:
           - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
             displayName: 'Install Terraform latest'                                            # ← steps block was missing
