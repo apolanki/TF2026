@@ -41,7 +41,7 @@ stages:
               backendAzureRmKey: $(backendKey)
   - stage: TerraformApply
     displayName: 'Terraform Apply'
-    dependsOn: TerraformPlan                         # ← added to enforce ordering
+    #dependsOn: TerraformPlan                         # ← added to enforce ordering
     jobs:
       - job: TFApply_job1                                  # ← job block was missing
         displayName: 'Terraform Apply'
