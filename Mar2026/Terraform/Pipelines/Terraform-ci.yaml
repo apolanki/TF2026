@@ -89,14 +89,23 @@ stages:
           - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
             displayName: 'Install Terraform latest'                                            # ← steps block was missing
           - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
-            displayName: 'Terraform: Init'               # ← moved inside steps
+            displayName: 'Terraform: Init'
+            inputs:                                       # ← was missing entirely
+              provider: azurerm
+              command: init
+              workingDirectory: $(workingDirectory)
+              backendServiceArm: $(azureServiceConnection)
+              backendAzureRmResourceGroupName: $(backendResourceGroup)
+              backendAzureRmStorageAccountName: $(backendStorageAccount)
+              backendAzureRmContainerName: $(backendContainer)
+              backendAzureRmKey: $(backendKey)              # ← moved inside steps
           - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
             displayName: 'Terraform: Plan'
             inputs:                                       # ← was incorrectly "parameters:"
               provider: azurerm
               command: plan
               workingDirectory: $(workingDirectory)
-              environmentServiceNameAzureRM: $(envservicenameazurerm)
+              backendServiceArm: $(azureServiceConnection)
               backendAzureRmResourceGroupName: $(backendResourceGroup)
               backendAzureRmStorageAccountName: $(backendStorageAccount)
               backendAzureRmContainerName: $(backendContainer)
