@@ -40,20 +40,27 @@ stages:
               backendAzureRmContainerName: $(backendContainer)
               backendAzureRmKey: $(backendKey)
 
-  # ----- STAGE 2: Terraform Validate -----
-  - stage: TerraformValidate
-    displayName: 'Terraform Validate'
-    dependsOn: TerraformInstaller                         # ← added to enforce ordering
-    jobs:
-      - job: TFValidate_job1                              # ← job block was missing
-        displayName: 'Terraform Validate'
-        steps:                                            # ← steps block was missing
           - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
             displayName: 'Terraform: Validate'
             inputs:
               provider: azurerm
               command: validate
               workingDirectory: $(workingDirectory)
+
+  # # ----- STAGE 2: Terraform Validate -----
+  # - stage: TerraformValidate
+  #   displayName: 'Terraform Validate'
+  #   dependsOn: TerraformInstaller                         # ← added to enforce ordering
+  #   jobs:
+  #     - job: TFValidate_job1                              # ← job block was missing
+  #       displayName: 'Terraform Validate'
+  #       steps:                                            # ← steps block was missing
+  #         - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+  #           displayName: 'Terraform: Validate'
+  #           inputs:
+  #             provider: azurerm
+  #             command: validate
+  #             workingDirectory: $(workingDirectory)
 
   # ----- STAGE 3: Terraform Plan -----
   - stage: TerraformPlan
