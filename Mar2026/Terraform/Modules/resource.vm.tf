@@ -30,7 +30,7 @@ resource "azurerm_virtual_machine" "myvm" {
 
 
   storage_os_disk {
-    name              = var.varosdiskname
+    name              = "${var.varosdiskname}-${azurerm_virtual_machine.myvm.name}"
     create_option     = "FromImage"
     caching           = "ReadWrite"
     disk_size_gb      = var.vardisksize
@@ -47,7 +47,7 @@ resource "azurerm_virtual_machine" "myvm" {
   os_profile {
     admin_username = var.admin_username
     admin_password = var.admin_password
-    computer_name  = "myvm-srv01"
+    computer_name  = var.varvmname
 
 
   }

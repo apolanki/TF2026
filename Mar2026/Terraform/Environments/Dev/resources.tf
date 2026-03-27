@@ -12,7 +12,7 @@ module "deploy_infra" {
   varsnetaddressprefix = "10.51.3.0/26"
   varsubnet            = "snet1"
   varvmname            = "salesvm"
-  varvmrg              = "rg_sales"
+  varvmrg              = "rg_sales_dev"
   varvmsize            = "Standard_D2s_v3"
   varvnet              = "vnet1"
   varenvironment       = "dev"
