@@ -16,6 +16,14 @@ terraform {
     #   }
   }
 
+  backend "azurerm" {
+    resource_group_name  = "rg-polanki-prod"
+    storage_account_name = "sapolankitfstateprod"
+    container_name       = "tfstateprod"
+    key                  = "terraform.tfstate"
+
+  }
+
 }
 
 provider "azurerm" {

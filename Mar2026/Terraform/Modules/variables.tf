@@ -1,27 +1,36 @@
 variable "varlocation" {
   description = "The location to deploy resources"
-  type        = list(string)
-  default     = ["centralus", "ukwest"]
+  type = string
+  #type        = list(string)
+  #default     = ["centralus", "ukwest"]
 }
 variable "varvnet" {
-  type    = list(string)
-  default = ["vnet-centralus", "vnet-ukwest"]
+  description = "The name of the virtual network to create"
+  type = string
+  # type    = list(string)
+  # default = ["vnet-centralus", "vnet-ukwest"]
 }
 
 variable "varaddresspace" {
-  type    = list(string)
-  default = ["10.51.0.0/18", "10.21.0.0/18"]
+  description = "The address space for the virtual network"
+  type    = string
+
+  #default = ["10.51.0.0/18", "10.21.0.0/18"]
 
 }
 
 variable "varsnetaddressprefix" {
-  type    = list(string)
-  default = ["10.51.3.0/26", "10.21.1.0/26"]
+  description = "The address prefix for the subnet"
+  type    = string
+  #type    = list(string)
+  #default = ["10.51.3.0/26", "10.21.1.0/26"]
 
 }
 variable "varsubnet" {
+  description = "The name of the subnet to create"
+  type    = string
   //type        = list(string)
-  default = "snet"
+  #default = "snet"
 }
 
 variable "admin_username" {
@@ -42,21 +51,32 @@ variable "admin_password" {
 
 // Variables for Virtual Machine
 variable "varvmrg" {
-  type    = list(string)
-  default = ["rg-vms-centralus", "rg-vms-ukwest"]
+  description = "The name of the resource group to create for the VM"
+  type    = string
+  # 
+  # type    = list(string)
+  # default = ["rg-vms-centralus", "rg-vms-ukwest"]
 }
 
 
 variable "varvmname" {
-  default = "vm-server"
+  description = "The name of the virtual machine to create"
+  type    = string
+  #type        = list(string)
+  #default = module.naming_virtual_machine.result
 }
 
 variable "varvmsize" {
-  default = "Standard_D2s_v3"
+  description = "The size of the virtual machine to create"
+  type    = string
+  #default = "Standard_D2s_v3"
 }
 
 variable "varosdiskname" {
-  default = "vm-server-01-os-disk-01"
+  description = "The name of the OS disk to create for the VM"
+  type    = string
+  
+  #default = "vm-server-01-os-disk-01"
 }
 
 variable "vardisksize" {
@@ -64,30 +84,44 @@ variable "vardisksize" {
 }
 
 variable "vardisktype" {
-  default = "Standard_LRS"
+  description = "The type of the disk to create for the VM"
+  type    = string
+  #default = "Standard_LRS"
 }
 
 variable "varpublisher" {
-  default = "MicrosoftWindowsServer"
+  description = "The publisher of the VM image"
+  type    = string
+  #default = "MicrosoftWindowsServer"
 }
 
 variable "varsku" {
-  default = "2022-Datacenter"
+  description = "The SKU of the VM image"
+  type    = string
+  #default = "2022-Datacenter"
 }
 
 variable "varvmuser" {
+  description = "The username for the VM"
+  type    = string
   default = "azuser1"
 }
 
 variable "varcomputername" {
-  default = "myvm-srv1"
+  description = "The name of the computer"
+  type    = string
+  #default = "myvm-srv1"
 }
 
 
 variable "varnic" {
-  default = "nic_vms"
+  description = "The name of the network interface to create"
+  type    = string
+  #default = "nic_vms"
 }
 variable "varsubnetid" {
+  description = "The ID of the subnet to associate with the VM"
+  type    = string
   default = "avxa"
 }
 
@@ -99,8 +133,19 @@ variable "varvnet1" {
   default = "vnet-uksouth-01"
 }
 
-# variable "tags" {
-#   type        = map(string)
-#   description = "Mandatory tags to provide to resources"
-#   default     = {}
-# }
+variable "tags" {
+  type        = map(string)
+  description = "Mandatory tags to provide to resources"
+  default     = {}
+}
+
+variable "varenvironment" {
+  description = "The environment to deploy resources"
+  type        = string
+    
+}
+
+variable "varnamingsuffix" {
+  description = "The suffix to add to resource names"
+  type        = string
+}

@@ -1,0 +1,10 @@
+# locals {
+
+#   common_tags = {
+#     ApplicationName            = "tfdemo"
+#     DepartmentCode             = "dtd"
+#     BillingOwnerEmail          = "polankiaz501@outlook.com"
+#     Environment                = "dev"
+#     TechnicalAccountOwnerEmail = "polankiaz501@outlook.com"
+#   }
+# }

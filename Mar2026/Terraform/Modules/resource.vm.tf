@@ -1,12 +1,12 @@
 resource "azurerm_network_interface" "mynic" {
-  count               = 2
-  name                = "nic-${var.varvmname}-${count.index + 1}"
-  location            = azurerm_resource_group.myrg[count.index].location
-  resource_group_name = azurerm_resource_group.myrg[count.index].name
+  #count               = 2
+  name                = "${var.varnic}${var.varenvironment}${var.varnamingsuffix}${random_string.resource_code.result}"
+  location            = azurerm_resource_group.myrg.location
+  resource_group_name = azurerm_resource_group.myrg.name
 
   ip_configuration {
     name                          = "ipconfiguration-${var.varvmname}"
-    subnet_id                     = azurerm_subnet.myvnet1-snet1[count.index].id
+    subnet_id                     = azurerm_subnet.myvnet1-snet1.id
     private_ip_address_allocation = "Dynamic"
 
   }
@@ -15,12 +15,12 @@ resource "azurerm_network_interface" "mynic" {
 }
 
 resource "azurerm_virtual_machine" "myvm" {
-  count                         = 2
-  name                          = "${var.varvmname}-${count.index + 1}"
-  resource_group_name           = azurerm_resource_group.myrg[count.index].name
-  location                      = azurerm_resource_group.myrg[count.index].location
+  #count                         = 2
+  name                          = "${var.varvmname}${var.varenvironment}${var.varnamingsuffix}${random_string.resource_code.result}"
+  resource_group_name           = azurerm_resource_group.myrg.name
+  location                      = azurerm_resource_group.myrg.location
   vm_size                       = var.varvmsize
-  network_interface_ids         = [azurerm_network_interface.mynic[count.index].id, ]
+  network_interface_ids         = [azurerm_network_interface.mynic.id, ]
   delete_os_disk_on_termination = true
 
   os_profile_windows_config {
@@ -30,7 +30,7 @@ resource "azurerm_virtual_machine" "myvm" {
 
 
   storage_os_disk {
-    name              = "os-disk-01-${var.varvmname}"
+    name              = var.varosdiskname
     create_option     = "FromImage"
     caching           = "ReadWrite"
     disk_size_gb      = var.vardisksize
@@ -52,7 +52,7 @@ resource "azurerm_virtual_machine" "myvm" {
 
   }
 
-  tags = local.common_tags
+  tags = var.tags
 
   //depends_on = [ azurerm_network_interface.mynic ]
   depends_on = [var.varnic]
