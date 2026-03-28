@@ -10,7 +10,7 @@ resource "azurerm_network_interface" "main" {
     private_ip_address_allocation = "Dynamic"
 
   }
-  depends_on = [azurerm_virtual_network.main, azurerm_subnet.main, azurerm_resource_group.main, azurerm_virtual_machine.main]
+  depends_on = [azurerm_virtual_network.main, azurerm_subnet.main, azurerm_resource_group.main]
 
 }
 
@@ -30,7 +30,7 @@ resource "azurerm_virtual_machine" "main" {
 
 
   storage_os_disk {
-    name              = "${var.varosdiskname}-${azurerm_virtual_machine.main.name}"
+    name              = "${var.varosdiskname}_${var.varvmname}_${random_string.resource_code.result}"
     create_option     = "FromImage"
     caching           = "ReadWrite"
     disk_size_gb      = var.vardisksize
