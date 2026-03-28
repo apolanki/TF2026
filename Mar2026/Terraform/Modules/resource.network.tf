@@ -6,7 +6,7 @@ resource "azurerm_virtual_network" "main" {
   location            = var.varlocation
   resource_group_name = var.varvmrg
   tags                = var.tags
-  depends_on          = [azurerm_resource_group.main.name]
+  #depends_on          = [azurerm_resource_group.main.name]
 
 }
 
@@ -16,6 +16,6 @@ resource "azurerm_subnet" "main" {
   resource_group_name  =  azurerm_virtual_network.main.resource_group_name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = [var.varsnetaddressprefix]
-  depends_on           = [azurerm_resource_group.main.name]
+  #depends_on           = [azurerm_resource_group.main.name]
 
 }
