@@ -1,5 +1,5 @@
 //Create ResourceGroups
-resource "azurerm_resource_group" "myrg" {
+resource "azurerm_resource_group" "main" {
   #count    = length(var.varvmrg)
   #name     = "${var.varvmrg[count.index]}-${count.index + 1}"
   name = var.varvmrg
