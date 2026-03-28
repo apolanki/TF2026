@@ -5,7 +5,7 @@ resource "azurerm_network_interface" "main" {
   resource_group_name = azurerm_resource_group.myrg.name
 
   ip_configuration {
-    name                          = "ipconfiguration-${azurerm_virtual_machine.main.name}"
+    name                          = "ipconfiguration-${var.varvmname}"
     subnet_id                     = azurerm_subnet.myvnet1-snet1.id
     private_ip_address_allocation = "Dynamic"
 
