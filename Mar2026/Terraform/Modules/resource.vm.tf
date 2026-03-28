@@ -1,8 +1,8 @@
 resource "azurerm_network_interface" "main" {
   #count               = 2
   name                = "${var.varnic}${var.varenvironment}${var.varnamingsuffix}${random_string.resource_code.result}"
-  location            = azurerm_resource_group.myrg.location
-  resource_group_name = azurerm_resource_group.myrg.name
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
 
   ip_configuration {
     name                          = "ipconfiguration-${var.varvmname}"

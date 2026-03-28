@@ -84,7 +84,7 @@ resource "random_string" "resource_code" {
 
 
 data "azurerm_virtual_machine" "main" {
-  name                = azurerm_virtual_machine.myvm.name
-  resource_group_name = azurerm_resource_group.myrg.name
+  name                = azurerm_virtual_machine.main.name
+  resource_group_name = azurerm_resource_group.main.name
   
 }
