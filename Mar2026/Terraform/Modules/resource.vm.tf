@@ -10,7 +10,7 @@ resource "azurerm_network_interface" "main" {
     private_ip_address_allocation = "Dynamic"
 
   }
-  depends_on = [azurerm_virtual_network.main, azurerm_subnet.main, azurerm_resource_group.main]
+ # depends_on = [azurerm_virtual_network.main, azurerm_subnet.main, azurerm_resource_group.main]
 
 }
 
@@ -54,5 +54,5 @@ resource "azurerm_virtual_machine" "main" {
 
   tags = var.tags
 
-  depends_on = [azurerm_network_interface.main.id,]
+  #depends_on = [azurerm_network_interface.main.id,]
 }
